@@ -1,0 +1,12 @@
+[Unit]
+Description=Notificação de bateria
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/local/bin/
+ExecStart=/usr/bin/bash /usr/local/bin/power.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

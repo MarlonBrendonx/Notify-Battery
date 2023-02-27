@@ -13,7 +13,7 @@
 
 
 #----------------------------------Variables----------------------------------------------------|
-percentageDischarging=31
+percentageDischarging=15
 #-----------------------------------------------------------------------------------------------|
 
 
@@ -23,10 +23,11 @@ do
 power=$( upower -i /org/freedesktop/UPower/devices/battery_BAT0   )
 
 percentage=$( grep percentage <<< $power | cut -d':' -f2  )
+percentage=${percentage%%\%} 
 charge=$( grep state <<< $power | cut -d':' -f2)
 
-(( ${percentage%%\%} <= "$percentageDischarging" )) && [[ ${charge//[[:blank:]]/} = 'discharging' ]] && \
-  notify-send "Bateria baixa" "\nEu vou cairr. Ajuda aqui pô" --icon="$HOME/bat.png" -u critical
+(( $percentage <= "$percentageDischarging" )) && [[ ${charge//[[:blank:]]/} = 'discharging' ]] && \
+  notify-send "Bateria baixa" "\n Energia em ${percentage//[[:blank:]]/}%. Conecte o carregador" --icon="$PWD/bat.png" -u critical
 
 done
 
